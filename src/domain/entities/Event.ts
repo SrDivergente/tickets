@@ -20,7 +20,15 @@ export class Event {
     return this.props.description;
   }
 
+  set description(description: string) {
+    this.props.description = description;
+  }
+
   get price() {
     return this.props.price;
+  }
+
+  set price(price: number) {
+    this.props.price = price;
   }
 }

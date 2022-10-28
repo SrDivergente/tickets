@@ -13,10 +13,20 @@ type GetEventOutput = {
   eventPrice: number
 }
 
+type UpdateEventFieldsInput = {
+  eventDescription: string;
+  eventPrice: number
+}
+
 export class EventService {
   constructor(private eventRepository: EventRepository) {}
 
   async create(input: CreateEventInput): Promise<void> {
+
+    if (!input.eventCode) {
+      throw new Error("Invalid event code");
+    }
+
     const event = new Event({
       code: input.eventCode,
       description: input.eventDescription,
@@ -37,7 +47,10 @@ export class EventService {
   }
 
   async delete(eventCode: string): Promise<void> {
-    const event = await this.eventRepository.get(eventCode);
-    if (!event) throw new Error("Event not found");
+    await this.eventRepository.delete(eventCode);
+  }
+
+  async update(fields: UpdateEventFieldsInput, eventCode: string): Promise<void> {
+    await this.eventRepository.update(fields, eventCode);
   }
 }

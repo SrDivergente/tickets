@@ -1,0 +1,20 @@
+import { Event } from "../../domain/entities/Event";
+import { EventRepository } from "../../domain/repositories/event-repository";
+
+export class EventInMemoryRepository implements EventRepository {
+  events: Event[] = [];
+
+  async save(event: Event) {
+    this.events.push(event);
+  }
+
+  async get(eventCode: string) {
+    const event = this.events.find(event => event.code == eventCode);
+    if (!event) throw new Error("Event not found");
+    return event;
+  }
+
+  async delete(eventCode: string) {
+    this.events = this.events.filter((event) => event.code != eventCode);
+  }
+}

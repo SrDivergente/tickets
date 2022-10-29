@@ -4,7 +4,7 @@ import { Ticket } from './Ticket';
 type UserProps = {
   name: string;
   email: string;
-  tickets?: Ticket[];
+  tickets: Ticket[];
 }
 
 export class User extends BaseEntity<UserProps> {

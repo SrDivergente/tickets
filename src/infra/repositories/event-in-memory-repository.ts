@@ -2,7 +2,13 @@ import { Event } from "../../domain/entities/Event";
 import { EventRepository, UpdateFields } from '../../domain/repositories/event-repository';
 
 export class EventInMemoryRepository implements EventRepository {
-  events: Event[] = [];
+  events: Event[] = [
+    new Event({
+      code: "event-code",
+      description: "event-description",
+      ticketPrice: 100,
+    })
+  ];
 
   async save(event: Event) {
     this.events.push(event);
@@ -10,7 +16,6 @@ export class EventInMemoryRepository implements EventRepository {
 
   async get(eventCode: string) {
     const event = this.events.find(event => event.code == eventCode);
-    if (!event) throw new Error("Event not found");
     return event;
   }
 
@@ -21,7 +26,9 @@ export class EventInMemoryRepository implements EventRepository {
   async update(fields: UpdateFields, eventCode: string) {
     const event = await this.get(eventCode);
 
-    event.description = fields.eventDescription;
-    event.ticketPrice = fields.eventTicketPrice;
+    if (event) {
+      event.description = fields.eventDescription;
+      event.ticketPrice = fields.eventTicketPrice;
+    }
   }
 }

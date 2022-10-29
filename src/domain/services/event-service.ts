@@ -33,7 +33,7 @@ export class EventService {
 
   async get(eventCode: string): Promise<GetEventOutput> {
     const event = await this.eventRepository.get(eventCode);
-
+    if (!event) throw new Error("Event not found.");
     return {
       eventCode: event.code,
       eventDescription: event.description,
@@ -42,6 +42,8 @@ export class EventService {
   }
 
   async delete(eventCode: string): Promise<void> {
+    const event = await this.eventRepository.get(eventCode);
+    if (!event) throw new Error("Event not found.");
     await this.eventRepository.delete(eventCode);
   }
 

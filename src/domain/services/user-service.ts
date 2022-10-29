@@ -46,7 +46,7 @@ export class UserService {
 
     if (userExists) throw new Error("User already exists.");
 
-    const user = new User(input);
+    const user = new User({...input, tickets: []});
 
     await this.userRepository.create(user);
   }

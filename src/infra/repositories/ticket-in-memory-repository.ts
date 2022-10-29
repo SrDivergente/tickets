@@ -11,7 +11,6 @@ export class TicketInMemoryRepository implements TicketRepository {
 
   async get(ticketCode: string) {
     const ticket = this.tickets.find(ticket => ticket.ticketCode == ticketCode);
-    if (!ticket) throw new Error("Ticket not found");
     return ticket;
   }
 

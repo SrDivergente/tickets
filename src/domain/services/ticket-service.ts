@@ -1,6 +1,7 @@
 import { Ticket } from '../entities/Ticket';
 import { EventRepository } from '../repositories/event-repository';
 import { TicketRepository } from '../repositories/ticket-repository';
+import { UserRepository } from '../repositories/user-repository';
 
 type PurchaseTicketInput = {
   ticketCode: string;
@@ -13,21 +14,29 @@ export class TicketService {
 
   constructor(
     private ticketRepository: TicketRepository, 
-    private eventRepository: EventRepository
+    private eventRepository: EventRepository,
+    private userRepository: UserRepository
   ) {}
 
   async purchase(input: PurchaseTicketInput) {
-    const eventExists = this.eventRepository.get(input.eventCode);
+    const eventExists = await this.eventRepository.get(input.eventCode);
 
     if (!eventExists) throw new Error("Event not found.");
 
-    const ticket = new Ticket(input);
+    const userExists = await this.userRepository.get(input.ownerEmail);
 
-    this.ticketRepository.save(ticket);
+    if (!userExists) throw new Error("User not found.");
+
+    const ticket = new Ticket(input);
+    userExists.tickets.push(ticket);
+
+    await this.ticketRepository.save(ticket);
   }
 
   async get(ticketCode: string) {
     const ticket = await this.ticketRepository.get(ticketCode);
+
+    if (!ticket) throw new Error("Ticket not found.");
 
     return {
       eventCode: ticket.eventCode,
@@ -39,6 +48,7 @@ export class TicketService {
 
   async delete(ticketCode: string) {
     const ticket = await this.ticketRepository.get(ticketCode);
+    if (!ticket) throw new Error("Ticket not found.");
     this.ticketRepository.delete(ticket.ticketCode);
   }
 

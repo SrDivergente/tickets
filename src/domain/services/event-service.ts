@@ -36,6 +36,8 @@ export class EventService {
   }
 
   async get(eventCode: string): Promise<GetEventOutput> {
+    if (!eventCode) throw new Error("Code can't be empty");
+
     const event = await this.eventRepository.get(eventCode);
     if (!event) throw new Error("Event not found.");
     return {

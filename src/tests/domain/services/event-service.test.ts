@@ -8,7 +8,7 @@ describe("EventService", () => {
   const eventRepository = new EventInMemoryRepository();
   const eventService = new EventService(eventRepository);
 
-  it("should be able to create a event", async () => {
+  it("should be able to create and get a event", async () => {
     const input = {
       eventCode: randomUUID(),
       eventDescription: "event-description",
@@ -20,6 +20,14 @@ describe("EventService", () => {
 
     expect(output).toBeTruthy();
     expect(input).toEqual(output);
+  })
+
+  it("should throw error when trying to get a event that don't exist", () => {
+    expect(() => eventService.get("event-code-that-dont-exist")).rejects.toThrowError();
+  })
+
+  it("should throw error when trying to pass a invalid event code", () => {
+    expect(() => eventService.get("")).rejects.toThrowError("Code can't be empty");
   })
 
   it("should throw error when trying to create a event that already exists", async () => {

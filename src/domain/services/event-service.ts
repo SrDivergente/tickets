@@ -22,11 +22,6 @@ export class EventService {
   constructor(private eventRepository: EventRepository) {}
 
   async create(input: CreateEventInput): Promise<void> {
-
-    if (!input.eventCode) {
-      throw new Error("Invalid event code");
-    }
-
     const event = new Event({
       code: input.eventCode,
       description: input.eventDescription,

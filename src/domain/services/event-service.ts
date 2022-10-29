@@ -23,7 +23,7 @@ export class EventService {
 
   async create(input: CreateEventInput): Promise<void> {
     const eventExists = await this.eventRepository.get(input.eventCode);
-    
+
     if (eventExists) throw new Error("Event already exists");
 
     const event = new Event({
@@ -52,6 +52,9 @@ export class EventService {
   }
 
   async update(fields: UpdateEventFieldsInput, eventCode: string): Promise<void> {
+    if (!fields.eventDescription) throw new Error("Invalid event description");
+    if (!fields.eventTicketPrice) throw new Error("Invalid event ticket price");
+
     await this.eventRepository.update(fields, eventCode);
   }
 }

@@ -99,4 +99,24 @@ describe("EventService", () => {
     expect(updatedEvent.eventTicketPrice).not.equal(input.eventTicketPrice);
 
   })
+
+  it("should throw error when trying to update a event with invalid data", async () => {
+    const input = {
+      eventCode: randomUUID(),
+      eventDescription: "event-description",
+      eventTicketPrice: 0
+    }
+
+    await eventService.create(input);
+
+    const output = await eventService.get(input.eventCode);
+
+    const fieldsToUpdate = {
+      eventDescription: "",
+      eventTicketPrice: -1
+    } 
+
+    const promise = eventService.update(fieldsToUpdate, output.eventCode);
+    expect(() => promise).rejects.toThrowError();
+  })
 })

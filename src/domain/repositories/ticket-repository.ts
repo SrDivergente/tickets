@@ -1,6 +1,6 @@
 import { Ticket } from '../entities/Ticket';
 
-type UpdateTicketFields = {
+export type UpdateTicketFields = {
   ownerEmail?: string;
   price?: number;
 }

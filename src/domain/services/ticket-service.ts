@@ -9,13 +9,6 @@ type PurchaseTicketInput = {
   eventCode: string;
 };
 
-type Promise<GetTicketOutput> = {
-  ticketCode: string;
-  ownerEmail: string;
-  ownerName: string;
-  eventCode: string;
-};
-
 export class TicketService {
 
   constructor(

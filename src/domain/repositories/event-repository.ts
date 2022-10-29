@@ -1,4 +1,4 @@
-import { Event, EventProps } from "../entities/Event";
+import { Event } from "../entities/Event";
 
 export type UpdateFields = {
   eventDescription: string;

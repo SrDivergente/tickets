@@ -59,4 +59,5 @@ export class EventService {
 
     await this.eventRepository.update(fields, eventCode);
   }
+
 }

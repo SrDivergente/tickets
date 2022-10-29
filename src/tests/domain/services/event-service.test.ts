@@ -110,6 +110,16 @@ describe("EventService", () => {
 
   })
 
+  it("should throw error when trying to update a event that does not exists", async () => {
+    const input = {
+      eventCode: randomUUID(),
+      eventDescription: "event-description",
+      eventTicketPrice: 0
+    }
+
+    expect(() => eventService.delete(input.eventCode)).rejects.toThrowError();
+  })
+
   it("should throw error when trying to update a event with invalid data", async () => {
     const input = {
       eventCode: randomUUID(),

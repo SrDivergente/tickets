@@ -12,7 +12,7 @@ describe("EventService", () => {
     const input = {
       eventCode: randomUUID(),
       eventDescription: "event-description",
-      eventPrice: 0
+      eventTicketPrice: 0
     }
 
     await eventService.create(input);
@@ -26,7 +26,7 @@ describe("EventService", () => {
     const input = {
       eventCode: "",
       eventDescription: "event-description",
-      eventPrice: 0
+      eventTicketPrice: 0
     }
 
     const promise = eventService.create(input);
@@ -38,7 +38,7 @@ describe("EventService", () => {
     const input = {
       eventCode: randomUUID(),
       eventDescription: "event-description",
-      eventPrice: 0
+      eventTicketPrice: 0
     }
 
     await eventService.create(input);
@@ -56,7 +56,7 @@ describe("EventService", () => {
     const input = {
       eventCode: randomUUID(),
       eventDescription: "event-description",
-      eventPrice: 0
+      eventTicketPrice: 0
     }
 
     await eventService.create(input);
@@ -65,13 +65,13 @@ describe("EventService", () => {
 
     await eventService.update({
       eventDescription: "new-event-description",
-      eventPrice: 1
+      eventTicketPrice: 1
     }, output.eventCode);
 
     const updatedEvent = await eventService.get(input.eventCode);
 
     expect(updatedEvent.eventDescription).not.equal(input.eventDescription);
-    expect(updatedEvent.eventPrice).not.equal(input.eventPrice);
+    expect(updatedEvent.eventTicketPrice).not.equal(input.eventTicketPrice);
 
   })
 })

@@ -13,7 +13,7 @@ describe("TicketService", async () => {
   const event = new Event({
     code: "event-code",
     description: "event-description",
-    price: 100,
+    ticketPrice: 100,
   });
 
   await eventRepository.save(event);

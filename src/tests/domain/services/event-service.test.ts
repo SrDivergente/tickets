@@ -76,6 +76,16 @@ describe("EventService", () => {
     expect(promise).rejects.toThrowError();
   })
 
+  it("should throw error when trying to delete a event that do not exists", async () => {
+    const input = {
+      eventCode: randomUUID(),
+      eventDescription: "event-description",
+      eventTicketPrice: 0
+    }
+
+    expect(() => eventService.delete(input.eventCode)).rejects.toThrowError();
+  })
+
   it("should be able to update a event", async () => {
 
     const input = {

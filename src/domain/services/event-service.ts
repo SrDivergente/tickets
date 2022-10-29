@@ -4,18 +4,18 @@ import { EventRepository } from '../repositories/event-repository';
 type CreateEventInput = {
   eventCode: string;
   eventDescription: string;
-  eventPrice: number
+  eventTicketPrice: number
 }
 
 type GetEventOutput = {
   eventCode: string;
   eventDescription: string;
-  eventPrice: number
+  eventTicketPrice: number
 }
 
 type UpdateEventFieldsInput = {
   eventDescription: string;
-  eventPrice: number
+  eventTicketPrice: number
 }
 
 export class EventService {
@@ -30,7 +30,7 @@ export class EventService {
     const event = new Event({
       code: input.eventCode,
       description: input.eventDescription,
-      price: input.eventPrice
+      ticketPrice: input.eventTicketPrice
     });
 
     await this.eventRepository.save(event);
@@ -42,7 +42,7 @@ export class EventService {
     return {
       eventCode: event.code,
       eventDescription: event.description,
-      eventPrice: event.price
+      eventTicketPrice: event.ticketPrice
     };
   }
 

@@ -2,7 +2,7 @@ import { Event, EventProps } from "../entities/Event";
 
 export type UpdateFields = {
   eventDescription: string;
-  eventPrice: number
+  eventTicketPrice: number
 }
 
 export interface EventRepository {

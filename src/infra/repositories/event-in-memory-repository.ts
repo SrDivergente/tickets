@@ -22,6 +22,6 @@ export class EventInMemoryRepository implements EventRepository {
     const event = await this.get(eventCode);
 
     event.description = fields.eventDescription;
-    event.price = fields.eventPrice;
+    event.ticketPrice = fields.eventTicketPrice;
   }
 }

@@ -36,6 +36,12 @@ export class Ticket extends BaseEntity<TicketProps> {
   get ownerEmail() {
     return this.props.ownerEmail;
   }
+  get price() {
+    return this.props.price;
+  }
+  set price(price: number) {
+    this.props.price = price;
+  }
   set ownerEmail(ownerEmail: string) {
     this.props.ownerEmail = ownerEmail;
   }

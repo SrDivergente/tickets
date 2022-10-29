@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { UserService } from '../../../domain/services/user-service';
-import { UserInMemoryRepository } from '../../../infra/repositories/user-in-memory-repository';
+import { UserInMemoryRepository } from '../../user-in-memory-repository';
 
 describe("User service", () => {
   const userRepository = new UserInMemoryRepository();

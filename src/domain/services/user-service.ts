@@ -1,44 +1,25 @@
-import { Ticket } from "../entities/Ticket";
 import { User } from "../entities/User";
 import { UserRepository } from "../repositories/user-repository";
+import {
+  DeleteUserInout,
+  GetUserInput,
+  GetUserOutput,
+  UserCreateInput,
+} from "./types/";
 
-type UserCreateInput = {
-  name: string;
-  email: string;
-}
+export class UserService {
+  constructor(private userRepository: UserRepository) {}
 
-type GetUserInput = {
-  name: string;
-  email: string;
-}
-
-type GetUserOutput = {
-  name: string;
-  email: string;
-  tickets: Ticket[];
-}
-
-type DeleteUserInout = {
-  name: string;
-  email: string;
-}
-
-export class UserService { 
-
-  constructor(
-    private userRepository: UserRepository, 
-  ) {}
-  
   async get(input: GetUserInput): Promise<GetUserOutput> {
     const user = await this.userRepository.get(input.email);
 
-    if (!user) throw new Error("User not found")
+    if (!user) throw new Error("User not found");
 
     return {
       name: user.name,
       email: user.email,
-      tickets: user.tickets ?? []
-    }
+      tickets: user.tickets ?? [],
+    };
   }
 
   async create(input: UserCreateInput) {
@@ -46,7 +27,7 @@ export class UserService {
 
     if (userExists) throw new Error("User already exists.");
 
-    const user = new User({...input, tickets: []});
+    const user = new User({ ...input, tickets: [] });
 
     await this.userRepository.create(user);
   }
@@ -54,7 +35,7 @@ export class UserService {
   async delete(input: DeleteUserInout) {
     const user = await this.userRepository.get(input.email);
 
-    if (!user) throw new Error("User not found")
+    if (!user) throw new Error("User not found");
 
     await this.userRepository.delete(input.email);
   }

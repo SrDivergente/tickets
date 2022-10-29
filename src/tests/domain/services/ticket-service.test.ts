@@ -3,7 +3,7 @@ import { randomUUID } from "crypto";
 import { EventInMemoryRepository } from "../../../infra/repositories/event-in-memory-repository";
 import { TicketInMemoryRepository } from "../../../infra/repositories/ticket-in-memory-repository";
 import { TicketService } from "../../../domain/services/ticket-service";
-import { UserInMemoryRepository } from "../../../infra/repositories/user-in-memory-repository";
+import { UserInMemoryRepository } from "../../user-in-memory-repository";
 import { User } from "../../../domain/entities/User";
 import { Event } from "../../../domain/entities/Event";
 

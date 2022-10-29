@@ -7,18 +7,18 @@ export type TicketProps = {
   ownerEmail: string;
   eventCode: string;
   price: number;
-}
+};
 
 export class Ticket extends BaseEntity<TicketProps> {
   constructor(props: TicketProps, id?: string) {
-
     if (!props.code) throw new Error("Invalid ticket code");
     if (!props.ownerName) throw new Error("Invalid owner name");
     if (!props.ownerEmail) throw new Error("Invalid owner email");
     if (!props.eventCode) throw new Error("Invalid event code");
-    if (props.price < 0 || props.price > 100) throw new Error("Invalid ticket price");
+    if (props.price < 0 || props.price > 100)
+      throw new Error("Invalid ticket price");
 
-    super(props, id)
+    super(props, id);
   }
 
   get code() {
@@ -36,7 +36,6 @@ export class Ticket extends BaseEntity<TicketProps> {
   get ownerEmail() {
     return this.props.ownerEmail;
   }
-
   set ownerEmail(ownerEmail: string) {
     this.props.ownerEmail = ownerEmail;
   }

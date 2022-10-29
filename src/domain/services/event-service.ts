@@ -4,23 +4,33 @@ import { EventRepository } from '../repositories/event-repository';
 type CreateEventInput = {
   eventCode: string;
   eventDescription: string;
-  eventPrice: number
+  eventTicketPrice: number
 }
 
 type GetEventOutput = {
   eventCode: string;
   eventDescription: string;
-  eventPrice: number
+  eventTicketPrice: number
+}
+
+type UpdateEventFieldsInput = {
+  eventDescription: string;
+  eventTicketPrice: number
 }
 
 export class EventService {
   constructor(private eventRepository: EventRepository) {}
 
   async create(input: CreateEventInput): Promise<void> {
+
+    if (!input.eventCode) {
+      throw new Error("Invalid event code");
+    }
+
     const event = new Event({
       code: input.eventCode,
       description: input.eventDescription,
-      price: input.eventPrice
+      ticketPrice: input.eventTicketPrice
     });
 
     await this.eventRepository.save(event);
@@ -32,12 +42,15 @@ export class EventService {
     return {
       eventCode: event.code,
       eventDescription: event.description,
-      eventPrice: event.price
+      eventTicketPrice: event.ticketPrice
     };
   }
 
   async delete(eventCode: string): Promise<void> {
-    const event = await this.eventRepository.get(eventCode);
-    if (!event) throw new Error("Event not found");
+    await this.eventRepository.delete(eventCode);
+  }
+
+  async update(fields: UpdateEventFieldsInput, eventCode: string): Promise<void> {
+    await this.eventRepository.update(fields, eventCode);
   }
 }

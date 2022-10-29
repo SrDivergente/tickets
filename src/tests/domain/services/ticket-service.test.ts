@@ -1,9 +1,9 @@
 import { expect, describe, it } from "vitest";
 import { randomUUID } from "crypto";
-import { Event } from "../entities/Event";
-import { EventInMemoryRepository } from "../../infra/repositories/event-in-memory-repository";
-import { TicketInMemoryRepository } from "../../infra/repositories/ticket-in-memory-repository";
-import { TicketService } from "./ticket-service";
+import { Event } from "../../../domain/entities/Event";
+import { EventInMemoryRepository } from "../../../infra/repositories/event-in-memory-repository";
+import { TicketInMemoryRepository } from "../../../infra/repositories/ticket-in-memory-repository";
+import { TicketService } from "../../../domain/services/ticket-service";
 
 describe("TicketService", async () => {
   const eventRepository = new EventInMemoryRepository();
@@ -13,7 +13,7 @@ describe("TicketService", async () => {
   const event = new Event({
     code: "event-code",
     description: "event-description",
-    price: 100,
+    ticketPrice: 100,
   });
 
   await eventRepository.save(event);

@@ -11,4 +11,8 @@ export class UserInMemoryRepository implements UserRepository {
   async create(user: User) {
     this.users.push(user);
   }
+
+  async delete(email: string) {
+    this.users = this.users.filter((user) => user.email != email);
+  }
 }

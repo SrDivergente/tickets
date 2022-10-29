@@ -18,6 +18,11 @@ type GetUserOutput = {
   tickets: Ticket[];
 }
 
+type DeleteUserInout = {
+  name: string;
+  email: string;
+}
+
 export class UserService { 
 
   constructor(
@@ -44,5 +49,13 @@ export class UserService {
     const user = new User(input);
 
     await this.userRepository.create(user);
+  }
+
+  async delete(input: DeleteUserInout) {
+    const user = await this.userRepository.get(input.email);
+
+    if (!user) throw new Error("User not found")
+
+    await this.userRepository.delete(input.email);
   }
 }

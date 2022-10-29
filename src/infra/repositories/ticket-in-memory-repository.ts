@@ -18,4 +18,6 @@ export class TicketInMemoryRepository implements TicketRepository {
     this.tickets = this.tickets.filter((ticket) => ticket.ticketCode != ticketCode);
   }
 
+  async update() {}
+
 }

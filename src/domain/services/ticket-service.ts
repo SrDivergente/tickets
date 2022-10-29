@@ -28,6 +28,7 @@ export class TicketService {
     if (!userExists) throw new Error("User not found.");
 
     const ticket = new Ticket(input);
+
     userExists.tickets.push(ticket);
 
     await this.ticketRepository.save(ticket);
@@ -50,10 +51,25 @@ export class TicketService {
   }
 
   async delete(ticketCode: string) {
+
     if (!ticketCode) throw new Error("Ticket code can't be empty");
+
     const ticket = await this.ticketRepository.get(ticketCode);
+
     if (!ticket) throw new Error("Ticket not found.");
+
     this.ticketRepository.delete(ticket.ticketCode);
+  }
+
+  async changeOwner(ticketCode: string, toEmail: string) {
+    const ticket = await this.ticketRepository.get(ticketCode);
+
+    if (!ticket) throw new Error("Ticket not found");
+
+    this.ticketRepository.update({
+      ownerEmail: toEmail
+    }, ticket.ticketCode);
+    
   }
 
 }

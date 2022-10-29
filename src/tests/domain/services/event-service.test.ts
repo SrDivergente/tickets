@@ -22,16 +22,37 @@ describe("EventService", () => {
     expect(input).toEqual(output);
   })
 
-  it("should throw error with invalid event code", async () => {
+  it("should throw error when trying to create a event that already exists", async () => {
     const input = {
+      eventCode: 'event-code',
+      eventDescription: 'event-description',
+      eventTicketPrice: 0
+    }
+  })
+
+  it("should throw error when trying to create a event with invalid data", async () => {
+
+    const inputWithInvalidEventCode = {
       eventCode: "",
-      eventDescription: "event-description",
+      eventDescription: "valid-event-description",
       eventTicketPrice: 0
     }
 
-    const promise = eventService.create(input);
+    const inputWithInvalidEventDescription = {
+      eventCode: "valid-event-code",
+      eventDescription: '',
+      eventTicketPrice: 0
+    }
+    
+    const inputWithInvalidEventTicketPrice = {
+      eventCode: 'valid-event-code',
+      eventDescription: 'valid-event-description',
+      eventTicketPrice: -1
+    }
 
-    expect(promise).rejects.toThrowError();
+    expect(() => eventService.create(inputWithInvalidEventCode)).rejects.toThrowError();
+    expect(() => eventService.create(inputWithInvalidEventDescription)).rejects.toThrowError();
+    expect(() => eventService.create(inputWithInvalidEventTicketPrice)).rejects.toThrowError();
   })
 
   it("should be able to delete a event", async () => {

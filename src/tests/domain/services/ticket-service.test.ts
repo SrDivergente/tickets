@@ -5,6 +5,7 @@ import { TicketInMemoryRepository } from "../../../infra/repositories/ticket-in-
 import { TicketService } from "../../../domain/services/ticket-service";
 import { UserInMemoryRepository } from "../../../infra/repositories/user-in-memory-repository";
 import { User } from "../../../domain/entities/User";
+import { Event } from "../../../domain/entities/Event";
 
 const eventRepository = new EventInMemoryRepository();
 const ticketRepository = new TicketInMemoryRepository();
@@ -22,9 +23,16 @@ const fakeUser = {
   tickets: []
 }
 
+const fakeEvent = {
+  code: 'fake-code',
+  description: 'fake-description',
+  ticketPrice: 0
+}
+
 describe("TicketService", async () => {
 
   beforeAll(async () => {
+    await eventRepository.save(new Event(fakeEvent));
     await userRepository.create(new User(fakeUser));
   })
 
@@ -37,7 +45,7 @@ describe("TicketService", async () => {
       ticketCode: randomUUID(),
       ownerEmail: fakeUser.email,
       ownerName: fakeUser.name,
-      eventCode: "event-code",
+      eventCode: fakeEvent.code,
     };
 
     await ticketService.purchase(input);
@@ -54,7 +62,7 @@ describe("TicketService", async () => {
       ticketCode: randomUUID(),
       ownerEmail: fakeUser.email,
       ownerName: fakeUser.name,
-      eventCode: "event-code",
+      eventCode: fakeEvent.code,
     };
 
     await ticketService.purchase(input);

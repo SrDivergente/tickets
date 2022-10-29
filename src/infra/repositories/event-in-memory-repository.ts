@@ -2,13 +2,7 @@ import { Event } from "../../domain/entities/Event";
 import { EventRepository, UpdateFields } from '../../domain/repositories/event-repository';
 
 export class EventInMemoryRepository implements EventRepository {
-  events: Event[] = [
-    new Event({
-      code: "event-code",
-      description: "event-description",
-      ticketPrice: 100,
-    })
-  ];
+  events: Event[] = [];
 
   async save(event: Event) {
     this.events.push(event);

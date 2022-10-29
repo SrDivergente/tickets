@@ -7,7 +7,8 @@ describe("Ticket", () => {
     eventCode: 'event-code',
     ownerEmail: 'owner-email',
     ownerName: 'owner-name',
-    ticketCode: 'ticket-code'
+    code: 'ticket-code',
+    price: 0
   }
 
   it("should be able to create a ticket", () => {
@@ -32,12 +33,18 @@ describe("Ticket", () => {
     };
     const ticketWithInvalidTicketCode = {
       ...ticket,
-      ticketCode: ""
+      code: ""
+    };
+
+    const ticketWithInvalidPrice = {
+      ...ticket,
+      price: -1
     };
 
     expect(() => new Ticket(ticketWithInvalidEventCode)).toThrowError();
     expect(() => new Ticket(ticketWithInvalidOwnerName)).toThrowError();
     expect(() => new Ticket(ticketWithInvalidOwnerEmail)).toThrowError();
     expect(() => new Ticket(ticketWithInvalidTicketCode)).toThrowError();
+    expect(() => new Ticket(ticketWithInvalidPrice)).toThrowError();
   })
 })

@@ -4,10 +4,11 @@ import { TicketRepository } from '../repositories/ticket-repository';
 import { UserRepository } from '../repositories/user-repository';
 
 type PurchaseTicketInput = {
-  ticketCode: string;
+  code: string;
   ownerName: string;
   ownerEmail: string;
   eventCode: string;
+  price: number;
 };
 
 export class TicketService {
@@ -28,13 +29,17 @@ export class TicketService {
     if (!userExists) throw new Error("User not found.");
 
     const ticket = new Ticket(input);
+
     userExists.tickets.push(ticket);
 
     await this.ticketRepository.save(ticket);
   }
 
-  async get(ticketCode: string) {
-    const ticket = await this.ticketRepository.get(ticketCode);
+  async get(code: string) {
+
+    if (!code) throw new Error("Ticket code can't be empty");
+
+    const ticket = await this.ticketRepository.get(code);
 
     if (!ticket) throw new Error("Ticket not found.");
 
@@ -42,14 +47,31 @@ export class TicketService {
       eventCode: ticket.eventCode,
       ownerEmail: ticket.ownerEmail,
       ownerName: ticket.ownerName,
-      ticketCode: ticket.ticketCode
+      code: ticket.code,
+      price: ticket.price
     };
   }
 
-  async delete(ticketCode: string) {
-    const ticket = await this.ticketRepository.get(ticketCode);
+  async delete(code: string) {
+
+    if (!code) throw new Error("Ticket code can't be empty");
+
+    const ticket = await this.ticketRepository.get(code);
+
     if (!ticket) throw new Error("Ticket not found.");
-    this.ticketRepository.delete(ticket.ticketCode);
+
+    this.ticketRepository.delete(ticket.code);
+  }
+
+  async changeOwner(code: string, toEmail: string) {
+    const ticket = await this.ticketRepository.get(code);
+
+    if (!ticket) throw new Error("Ticket not found");
+
+    this.ticketRepository.update({
+      ownerEmail: toEmail
+    }, ticket.code);
+
   }
 
 }

@@ -50,6 +50,7 @@ export class TicketService {
   }
 
   async delete(ticketCode: string) {
+    if (!ticketCode) throw new Error("Ticket code can't be empty");
     const ticket = await this.ticketRepository.get(ticketCode);
     if (!ticket) throw new Error("Ticket not found.");
     this.ticketRepository.delete(ticket.ticketCode);

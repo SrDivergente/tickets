@@ -28,6 +28,10 @@ describe("EventService", () => {
       eventDescription: 'event-description',
       eventTicketPrice: 0
     }
+
+    await eventService.create(input);
+
+    expect(() => eventService.create(input)).rejects.toThrowError();
   })
 
   it("should throw error when trying to create a event with invalid data", async () => {

@@ -11,6 +11,10 @@ export class EventService {
   constructor(private eventRepository: EventRepository) {}
 
   async create(input: CreateEventInput): Promise<void> {
+    const eventExists = await this.eventRepository.get(input.eventCode);
+    
+    if (eventExists) throw new Error("Event already exists");
+
     const event = new Event({
       code: input.eventCode,
       description: input.eventDescription,
